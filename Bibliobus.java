@@ -1,86 +1,55 @@
-package tp3;
+package Bibliobus;
 
-import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Bibliobus {
-
-    private String name;
-    private Livre[] biblio;
-    private int taille = 100; 
-    private int limite = 0; 
-    Livre[] catalogue = new Livre[taille];
-    
-    public Bibliobus(String name) {
-        this.name = name;
-        this.biblio = new Livre[taille];
-    }
-
-    public int totauxLivres() {
-        int totaux = 0;
-        int indice = 0;
-        int x = 0;
-        
-        while(biblio[x].equals(null)) {
-        	indice = x;
-        }
-        
-    	for(int i = 0; i<indice; i++) {
-    		totaux = totaux +  biblio[i].nbreExemplaires;
-    	}
-        return totaux;
-    }
-
-    public String afficheBiblio() {
-    	String result= "";
-    	int j = 0;
-    	while(biblio[j] != null) {
-    		for(int i = 0; i<biblio.length; i++) {
-    			result += biblio[i].toString();
-    		}
-         j = 1;
-        }
-        return result;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Livre[] getBiblio() {
-        return biblio;
-    }
-
-    public void setBiblio(Livre[]biblio) {
-        this.biblio = biblio;
-    }
-
-    public void ajoutLivre(String titre, String auteur, String editeur) {
-        Livre nouveauLivre = new Livre(titre, auteur, editeur);
-        int indice = 0;
-        int i = 0;
-        while(biblio[i] != null) {
-        	indice = i;
-        }
-        if (biblio.length < 100) {
-            biblio[indice+1] = nouveauLivre;
-        }
-        
-    }
-
-    public void ajoutLivre(Livre livre) {
-        int indice = 0;
-        int i = 0;
-        while(biblio[i] != null) {
-        	indice = i;
-        }
-        if (biblio.length < 100) {
-            biblio[indice+1] = livre;
-        }
-    }
-
+	private String nom;
+	private int taille = 100;
+	private int limite = 0;
+	Livre[] catalogue = new Livre[taille];
+	
+	public Bibliobus(String nom) {
+		this.nom = nom;
+	}
+	public Bibliobus(String nom, int taille) {
+		this.nom = nom;
+		this.taille = taille;
+	}
+	public void ajoutLivre(String titre, String auteur, String editeur) {
+		Livre l = new Livre(titre, auteur, editeur);
+		if(limite < taille) {
+			catalogue[limite] = l;
+			limite++;
+		}else {
+			System.out.println("plus de place");
+		}
+	}
+	public void afficheCatalogue() {
+		for(int i = 0; i < limite; i++) {
+			System.out.println(catalogue[i]);
+		}
+	}
+	public String getTitre(int id) {
+		return catalogue[id].getTitre();
+	}
+	public String getAuteur(int id) {
+		return catalogue[id].getAuteur();
+	//Si catalogue est une liste : return catalogue.get(id).getAuteur();
+	}
+	public String getEditeur(int id) {
+		return catalogue[id].getEditeur();
+	}
+	public int getNbExemp(int id) {
+		return catalogue[id].getNbExemp();
+	}
+	public Egenre getGenre(int id) {
+		return catalogue[id].getGenre();
+	}
+	public void afficheLivre(int id) {
+		String ch = "[ " + id + " ] " + this.getTitre(id)
+		+ " " + this.getAuteur(id) + " " + this.getEditeur(id)
+		+ " " + this.getGenre(id) + " . Nombre exemplaires : "
+		+ this.getNbExemp(id);
+		System.out.println(ch);
+	}
 }
-
