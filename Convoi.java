@@ -1,18 +1,38 @@
 package tp4_bis;
 
-public class Convoi extends Vehicule {
-
-	double VitesseVehicule[]= {0,0,0,0};
-	public Convoi(String immat, int poidsVide, int chargeMax) {
-		super(immat, poidsVide, chargeMax);
-		// TODO Auto-generated constructor stub
+public class Convoi {
+	int taille = 5;
+	Vehicule[] tabConvoi = new Vehicule[taille];
+	TypeVehicule typeVehicule;
+	int indice;
+		
+	public Convoi(int newTaille) {
+		this.taille = newTaille;
+		this.indice = 0;
 	}
-	//ajoute un vehicule au convoi
-	//ajoute immatriculation a tab1[i]
-	//ajoute vitesse a tab2[i]
-	public void ajouteVitesseVehicule() {
-		for (int i = 0; i < 4; i++) {
-			
+	
+	public void ajouteAuConvoi(Vehicule vehicule) {
+		this.tabConvoi[indice] = vehicule;
+		indice ++;
+	}
+	
+	//public String toString() {
+	//	return "Type de vehicule : " + this.typeVehicule + ",\nImmatriculation : " + this.immatriculation + ",\nPoids à vide du véhicule : " + this.PoidsAVide
+	//			+ " tonnes,\nCharge maximum du véhicule : " + this.chargeMaximum + " tonnes,\nCharge actuelle : " + this.charge + "tonnes";
+	//}
+
+	public void afficheConvoi() {
+		for(int i = 0; i < tabConvoi.length; i++) {
+			if (tabConvoi[i]== null) {
+				this.indice = i;
+				break;
+			}
+		}
+		for(int i = 0; i < tabConvoi.length; i++) {
+			if (i < indice) {
+				System.out.println("---------------------------Véhicule n°"+i+"---------------------------");
+				System.out.println(tabConvoi[i].toString());
+			}
 		}
 	}
 }
