@@ -41,6 +41,9 @@ public class Bache extends Vehicule{
 				this.chargeBache + " tonnes"+"\nLa vitesse est de: "+VitesseMax()+" km/h\n";
 	}
 
-	
+	@Override
+	public int poidsTotal() {
+		return (this.chargeBache + 4);
+	}
 
 }

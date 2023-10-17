@@ -4,7 +4,7 @@ public class Convoi {
 	int taille = 5;
 	Vehicule[] tabConvoi = new Vehicule[taille];
 	TypeVehicule typeVehicule;
-	int indice;
+	int indice = 0;
 		
 	public Convoi(int newTaille) {
 		this.taille = newTaille;
@@ -15,11 +15,6 @@ public class Convoi {
 		this.tabConvoi[indice] = vehicule;
 		indice ++;
 	}
-	
-	//public String toString() {
-	//	return "Type de vehicule : " + this.typeVehicule + ",\nImmatriculation : " + this.immatriculation + ",\nPoids à vide du véhicule : " + this.PoidsAVide
-	//			+ " tonnes,\nCharge maximum du véhicule : " + this.chargeMaximum + " tonnes,\nCharge actuelle : " + this.charge + "tonnes";
-	//}
 
 	public void afficheConvoi() {
 		for(int i = 0; i < tabConvoi.length; i++) {
@@ -30,9 +25,19 @@ public class Convoi {
 		}
 		for(int i = 0; i < tabConvoi.length; i++) {
 			if (i < indice) {
-				System.out.println("---------------------------Véhicule n°"+i+"---------------------------");
+				System.out.println("---------------------------Véhicule n°"+(i+1)+"---------------------------");
 				System.out.println(tabConvoi[i].toString());
 			}
 		}
+	}
+	
+	public int vitesseMaxConvoi() {
+		int vitesseMaxConvoi = tabConvoi[0].VitesseMax();
+		for(int i = 1; i < this.indice; i++) {
+			if (tabConvoi[i -1].VitesseMax() <= tabConvoi[i].VitesseMax()) {
+				vitesseMaxConvoi = tabConvoi[i-1].VitesseMax();
+			}
+		}
+		return vitesseMaxConvoi;
 	}
 }

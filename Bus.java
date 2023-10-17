@@ -21,4 +21,9 @@ public class Bus extends Vehicule{
 		return "Type de vehicule : " + this.type + ",\nImmatriculation : " + this.immatriculation + ",\nPoids à vide du véhicule : " + 
 				this.PoidsAVide + " tonnes" +  "\nLa vitesse est de: "+VitesseMax()+" km/h\n";
 	}
+	
+	@Override
+	public int poidsTotal() {
+		return 4;
+	}
 }

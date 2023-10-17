@@ -24,5 +24,7 @@ public abstract class Vehicule {
 	public abstract int VitesseMax();
 	
 	public abstract String toString();
+	
+	public abstract int poidsTotal();
 
 }

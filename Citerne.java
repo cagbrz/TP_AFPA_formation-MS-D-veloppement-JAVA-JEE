@@ -41,4 +41,8 @@ public class Citerne extends Vehicule {
 				this.chargeCiterne + " tonnes"+"\nLa vitesse est de: "+VitesseMax()+" km/h\n";
 	}
 
+	@Override
+	public int poidsTotal() {
+		return (this.chargeCiterne + 3);
+	}
 }
