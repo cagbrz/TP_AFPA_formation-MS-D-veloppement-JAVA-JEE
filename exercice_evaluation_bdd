@@ -1,0 +1,401 @@
+import java.sql.*;
+import java.util.*;
+
+public class CreerConnexion {
+	//connecction à la base de données
+    public Connection myCnx() {
+        Connection cn = null;
+        // Création de la chaîne de connexion
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/exPartie4SQL", "root", "");
+            System.out.println("Connexion réussie");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Connexion pas réussie enfaite");
+        }
+        return cn;
+    }
+    
+    public static void dropTables(Connection cnx) throws SQLException {
+    	String str1 = "DROP TABLE IF EXISTS concerner"; PreparedStatement ps = cnx.prepareStatement(str1); ps.execute();
+    	String str2 = "DROP TABLE IF EXISTS composer"; ps = cnx.prepareStatement(str2); ps.execute();
+		String str3 = "DROP TABLE IF EXISTS livraison"; ps = cnx.prepareStatement(str3); ps.execute();
+		String str4 = "DROP TABLE IF EXISTS commande"; ps = cnx.prepareStatement(str4); ps.execute();
+		String str5 = "DROP TABLE IF EXISTS fournisseur"; ps = cnx.prepareStatement(str5);ps.execute();
+		 
+		String str6 = "DROP TABLE IF EXISTS client";ps = cnx.prepareStatement(str6);ps.execute();
+		String str7 = "DROP TABLE IF EXISTS produit";ps = cnx.prepareStatement(str7);ps.execute();
+		String str8 = "DROP TABLE IF EXISTS facture";ps = cnx.prepareStatement(str8);ps.execute();
+		String str9 = "DROP TABLE IF EXISTS tva";ps = cnx.prepareStatement(str9);ps.execute();
+		String str10 = "DROP TABLE IF EXISTS agence";ps = cnx.prepareStatement(str10);ps.execute();
+	}
+    
+    public static void createTable(Connection cnx) throws SQLException {
+    	String str = "CREATE TABLE IF NOT EXISTS agence(noag int auto_increment, nomag VARCHAR(99), PRIMARY KEY(noag));\n";
+		PreparedStatement ps = cnx.prepareStatement(str);
+		ps.execute();
+		
+		String str2 = "CREATE TABLE IF NOT EXISTS tva(codetva int auto_increment, tauxtva double, PRIMARY KEY(codetva));\n";
+		ps = cnx.prepareStatement(str2);
+		ps.execute();
+		
+		String str3 = "CREATE TABLE IF NOT EXISTS facture(nofac int auto_increment, datefac date, PRIMARY KEY(nofac));\n";
+		ps = cnx.prepareStatement(str3);
+		ps.execute();
+		
+		String str4 = "CREATE TABLE IF NOT EXISTS produit(refprod int auto_increment, desiprod VARCHAR(99), codetva int, PRIMARY KEY(refprod), "
+				+ "FOREIGN KEY(codetva) REFERENCES tva(codetva));\n";
+		ps = cnx.prepareStatement(str4);
+		ps.execute();
+		
+		String str5 = "CREATE TABLE IF NOT EXISTS client(cocli int auto_increment, nomcli VARCHAR(99), ruecli VARCHAR(99), villecli VARCHAR(99), noag int, PRIMARY KEY(cocli), "
+				+ "FOREIGN KEY(noag) REFERENCES agence(noag));\n";
+		ps = cnx.prepareStatement(str5);
+		ps.execute();
+		
+		String str6 = "CREATE TABLE IF NOT EXISTS fournisseur(nofrs int auto_increment, nomfrs VARCHAR(99), adrfrs VARCHAR(99), telfrs VARCHAR(99), PRIMARY KEY(nofrs));\n";
+		ps = cnx.prepareStatement(str6);
+		ps.execute();
+		
+		String str7 = "CREATE TABLE IF NOT EXISTS commande(nobc int auto_increment, datebc date, cocli int, nofrs int, PRIMARY KEY(nobc), "
+				+ "FOREIGN KEY(cocli) REFERENCES client(cocli), FOREIGN KEY(nofrs) REFERENCES fournisseur(nofrs));\n";
+		ps = cnx.prepareStatement(str7);
+		ps.execute();
+		
+		String str8 = "CREATE TABLE IF NOT EXISTS livraison(nobl int auto_increment, datebl date, nobc int, nofac int, PRIMARY KEY(nobl), "
+				+ "FOREIGN KEY(nofac) REFERENCES facture(nofac), FOREIGN KEY(nobc) REFERENCES commande(nobc));\n";
+		ps = cnx.prepareStatement(str8);
+		ps.execute();
+		
+		String str9 = "CREATE TABLE IF NOT EXISTS composer(nobl int, refprod int, qteliv int, PRIMARY KEY(nobl, refprod), "
+				+ "FOREIGN KEY(refprod) REFERENCES produit(refprod), FOREIGN KEY(nobl) REFERENCES livraison(nobl));\n";
+		ps = cnx.prepareStatement(str9);
+		ps.execute();
+		
+		String str10 = "CREATE TABLE IF NOT EXISTS concerner(nobc int, refprod int, qtecom int, punit double, PRIMARY KEY(nobc, refprod), "
+				+ "FOREIGN KEY(refprod) REFERENCES produit(refprod), FOREIGN KEY(nobc) REFERENCES commande(nobc));\n";
+		ps = cnx.prepareStatement(str10);
+		ps.execute();
+    }
+    
+    public static void insererData(Connection cnx) throws SQLException {
+		// table agence
+		String str1 = "INSERT INTO agence (nomag) VALUES\n"
+				+ "('sud-est'),\n"
+				+ "('sud-ouest'),\n"
+				+ "('sud'),\n"
+				+ "('nord'),\n"
+				+ "('nord-est'),\n"
+				+ "('nord-ouest'),\n"
+				+ "('ANTARIA'),\n"
+				+ "('ABYSSE');";
+		PreparedStatement ps = cnx.prepareStatement(str1);
+		ps.execute();
+		
+		// table client
+		String str2 = "INSERT INTO client (nomcli, ruecli, villecli, noag) VALUES\n"
+				+ "('Atef', 'general de gaule', 'Lille', 8),\n"
+				+ "('Chloe', 'des braves', 'Cergy', 7);";
+		ps = cnx.prepareStatement(str2);
+		ps.execute();
+		
+		// table tva
+		String str3 = "INSERT INTO tva (tauxtva) VALUES\n"
+				+ "(20),\n"
+				+ "(10);";
+		ps = cnx.prepareStatement(str3);
+		ps.execute();
+		
+		// table produit
+		String str4 = "INSERT INTO produit (desiprod, codetva) VALUES\n"
+				+ "('Ecran', 1),\n"
+				+ "('Souris', 1),\n"
+				+ "('Tapis', 2),\n"
+				+ "('Tableau', 2),\n"
+				+ "('Roue', 1),\n"
+				+ "('Unite', 1),\n"
+				+ "('Chevre', 2),\n"
+				+ "('Carabine', 1),\n"
+				+ "('Chocolat', 2),\n"
+				+ "('Feu de camp', 2);";
+		ps = cnx.prepareStatement(str4);
+		ps.execute();
+		
+		// table fournisseur
+		String str5 = "INSERT INTO fournisseur (nomfrs, adrfrs, telfrs) VALUES\n"
+				+ "('OREXAD', 'Bondue', '123456789'),\n"
+				+ "('INSY2S', 'Lille', '123456789');";
+		ps = cnx.prepareStatement(str5);
+		ps.execute();
+		
+		// table facture
+		String str6 = "INSERT INTO facture (datefac) VALUES\n"
+				+ "('2023-05-01'),\n"
+				+ "('2023-04-11'),\n"
+				+ "('2022-12-04'),\n"
+				+ "('2022-12-13');";
+		ps = cnx.prepareStatement(str6);
+		ps.execute();
+		
+		// table commande
+		String str7 = "INSERT INTO commande (datebc, cocli, nofrs) VALUES\n"
+				+ "('2023-05-23', 1, 2),\n"
+				+ "('2023-04-29', 2, 1);";
+		ps = cnx.prepareStatement(str7);
+		ps.execute();
+		
+		// table livraison
+		String str8 = "INSERT INTO livraison (datebl, nobc, nofac) VALUES\n"
+				+ "('2023-05-23', 1, 1),\n"
+				+ "('2023-05-15', 2, 2);";
+		ps = cnx.prepareStatement(str8);
+		ps.execute();
+
+		// table composer
+		String str9 = "INSERT INTO composer (nobl, refprod, qteliv) VALUES\n"
+				+ "(1, 1, 5),\n"
+				+ "(1, 2, 7),\n"
+				+ "(1, 3, 5),\n"
+				+ "(1, 9, 23),\n"
+				+ "(2, 7, 3),\n"
+				+ "(2, 8, 2);";
+		ps = cnx.prepareStatement(str9);
+		ps.execute();
+
+		// table concerner
+		String str10 = "INSERT INTO concerner (nobc, refprod, qtecom, punit) VALUES\n"
+				+ "(1, 1, 5, 200),\n"
+				+ "(1, 2, 7, 9),\n"
+				+ "(1, 3, 5, 4),\n"
+				+ "(1, 9, 23, 2),\n"
+				+ "(2, 7, 3, 120),\n"
+				+ "(2, 8, 3, 999);";
+		ps = cnx.prepareStatement(str10);
+		ps.execute();	
+	}
+    
+    public Map<Integer,String> requete1(Connection cnx) throws SQLException {
+		Map<Integer,String> res = new HashMap<>();		
+		Statement st;
+		ResultSet rs;
+		String str = "SELECT refprod, desiprod FROM produit ORDER BY desiprod"; 
+		st = cnx.createStatement(); 
+		rs = st.executeQuery(str);
+		
+		System.out.println("\n*******************************************************************");
+        System.out.println("Requête n°1:\nAfficher les produits en les triant par ordre alphabetique\n");
+		// Parcourir le résultat stocké dans rs
+		while (rs.next()) { 
+			System.out.println("Numéro : " + rs.getInt("refprod") + ", Le nom : " + rs.getString("desiprod")); 			
+			res.put(rs.getInt("refprod"), rs.getString("desiprod"));
+		}	 		
+		return res;
+	}
+    
+	public Map<Integer,String> requete2(Connection cnx) throws SQLException {
+		ResultSet rs;
+		Statement st;
+		Map<Integer,String> res = new HashMap<>();					
+		String str = "SELECT refprod, desiprod FROM produit WHERE refprod < 15"; 
+		st = cnx.createStatement(); 
+		rs = st.executeQuery(str);
+		// Parcourir le résultat stocké dans rs
+		System.out.println("\n*******************************************************************");
+        System.out.println("Requête n°2:\nAfficher les produits qui ont un identifiant inférieur à 15\n");
+		while (rs.next()) { 
+			System.out.println("Numéro : " + rs.getInt("refprod") + ", Le nom : " + rs.getString("desiprod")); 			
+			res.put(rs.getInt("refprod"), rs.getString("desiprod"));
+		}	 		
+		return res;
+	}
+	
+	public Map<Integer,String> requete3(Connection cnx) throws SQLException {
+		ResultSet rs;
+		Statement st;
+		Map<Integer,String> res = new HashMap<>();					
+		String str = "SELECT * FROM PRODUIT, composer WHERE (produit.Refprod < 15) AND composer.nobl >= 5;"; 
+		st = cnx.createStatement();
+		rs = st.executeQuery(str);
+		// Parcourir le résultat stocké dans rs
+		System.out.println("\n*******************************************************************");
+        System.out.println("Requête n°3:\nAfficher les produits qui ont un identifiant inférieur à 15\n"
+        		+ "et un identifiant fournisseur superieur ou égal à 5");
+		while (rs.next()) { 
+			System.out.println("Numéro : " + rs.getInt("refprod") + ", Le nom : " + rs.getString("desiprod")); 			
+			res.put(rs.getInt("refprod"), rs.getString("desiprod"));
+		}	 		
+		System.out.println("\nIl n'y a pas de produits ayant un identifiant inférieur à 15 et\n"
+				+ "un identifiant fournisseur supérieur ou égal à 5");
+		return res;
+	}
+
+	public Map<Integer,String> requete4(Connection cnx) throws SQLException {
+		ResultSet rs;
+		Statement st;
+		Map<Integer,String> res = new HashMap<>();					
+		String str = "SELECT * FROM PRODUIT, composer WHERE (produit.Refprod < 15 OR produit.Refprod BETWEEN 30 AND 40) AND composer.nobl >= 5;"; 
+		st = cnx.createStatement();
+		rs = st.executeQuery(str);
+		// Parcourir le résultat stocké dans rs
+		System.out.println("\n*******************************************************************");
+        System.out.println("Requête n°4:\nAfficher les produits qui ont un identifiant inférieur à 15\n"
+        		+ "ou compris entre 30 et 40 "
+        		+ "et un identifiant fournisseur superieur ou égal à 5");
+		while (rs.next()) { 
+			System.out.println("Numéro : " + rs.getInt("refprod") + ", Le nom : " + rs.getString("desiprod")); 			
+			res.put(rs.getInt("refprod"), rs.getString("desiprod"));
+		}	 		
+		System.out.println("\nIl n'y a pas de produits ayant un identifiant inférieur à 15 et\n"
+				+ "ou compris entre 30 et 40 "
+				+ "un identifiant fournisseur supérieur ou égal à 5");
+		return res;
+	}
+
+	public Map<Integer,String> requete5(Connection cnx) throws SQLException {
+		ResultSet rs;
+		Statement st;
+		Map<Integer,String> res = new HashMap<>();					
+		String str = "SELECT * FROM PRODUIT WHERE (produit.Refprod < 15 OR produit.Refprod BETWEEN 30 AND 40 OR produit.refprod >=70);"; 
+		st = cnx.createStatement();
+		rs = st.executeQuery(str);
+		// Parcourir le résultat stocké dans rs
+		System.out.println("\n*******************************************************************");
+        System.out.println("Requête n°5:\nAfficher les produits qui ont un identifiant inférieur à 15 \n"
+        		+ "ou compris entre 30 et 40 ou supérieur ou égale à 70.\n");
+		while (rs.next()) { 
+			System.out.println("Numéro : " + rs.getInt("refprod") + ", Le nom : " + rs.getString("desiprod")); 			
+			res.put(rs.getInt("refprod"), rs.getString("desiprod"));
+		}	 		
+		return res;
+	}
+
+	public Map<Integer,String> requete6(Connection cnx) throws SQLException {
+		ResultSet rs;
+		Statement st;
+		Map<Integer,String> res = new HashMap<>();					
+		String str = "SELECT * FROM produit WHERE produit.desiprod LIKE \"E%\";"; 
+		st = cnx.createStatement();
+		rs = st.executeQuery(str);
+		// Parcourir le résultat stocké dans rs
+		System.out.println("\n*******************************************************************");
+        System.out.println("Requête n°6:\nAfficher les produits dont le nom commence par un « E »\n");
+		while (rs.next()) { 
+			System.out.println("Numéro : " + rs.getInt("refprod") + ", Le nom : " + rs.getString("desiprod")); 			
+			res.put(rs.getInt("refprod"), rs.getString("desiprod"));
+		}	 		
+		return res;
+	}
+	
+	public Map<Integer,String> requete7(Connection cnx) throws SQLException {
+		ResultSet rs;
+		Statement st;
+		Map<Integer,String> res = new HashMap<>();					
+		String str = "SELECT * FROM produit WHERE produit.desiprod LIKE \"%E\";"; 
+		st = cnx.createStatement();
+		rs = st.executeQuery(str);
+		// Parcourir le résultat stocké dans rs
+		System.out.println("\n*******************************************************************");
+        System.out.println("Requête n°7:\nAfficher les produits dont le nom se termine par un « E »\n");
+		while (rs.next()) { 
+			System.out.println("Numéro : " + rs.getInt("refprod") + ", Le nom : " + rs.getString("desiprod")); 			
+			res.put(rs.getInt("refprod"), rs.getString("desiprod"));
+		}	 		
+		return res;
+	}
+	
+	public Map<Integer,String> requete8(Connection cnx) throws SQLException {
+		ResultSet rs;
+		Statement st;
+		Map<Integer,String> res = new HashMap<>();					
+		String str = "SELECT * FROM produit WHERE produit.desiprod LIKE \"%E%\";"; 
+		st = cnx.createStatement();
+		rs = st.executeQuery(str);
+		// Parcourir le résultat stocké dans rs
+		System.out.println("\n*******************************************************************");
+    System.out.println("Requête n°8:\nAfficher les produits dont le nom contient un « E »\n");
+		while (rs.next()) { 
+			System.out.println("Numéro : " + rs.getInt("refprod") + ", Le nom : " + rs.getString("desiprod")); 			
+			res.put(rs.getInt("refprod"), rs.getString("desiprod"));
+		}	 		
+		return res;
+	}
+	
+	public Map<Integer,String> requete9(Connection cnx) throws SQLException {
+		ResultSet rs;
+		Statement st;
+		Map<Integer,String> res = new HashMap<>();					
+		String str = "SELECT * FROM produit WHERE produit.desiprod LIKE \"_E%\";"; 
+		st = cnx.createStatement();
+		rs = st.executeQuery(str);
+		// Parcourir le résultat stocké dans rs
+		System.out.println("\n*******************************************************************");
+        System.out.println("Requête n°9:\nAfficher les produits dont la deuxième lettre est un « E »\n");
+		while (rs.next()) { 
+			System.out.println("Numéro : " + rs.getInt("refprod") + ", Le nom : " + rs.getString("desiprod")); 			
+			res.put(rs.getInt("refprod"), rs.getString("desiprod"));
+		}	 		
+		return res;
+	}
+	
+	public Map<Integer,String> requete10(Connection cnx) throws SQLException {
+		ResultSet rs;
+		Statement st;
+		Map<Integer,String> res = new HashMap<>();					
+		String str = "SELECT c.* FROM client c, agence a WHERE c.noag = a.noag AND a.nomag = 'A%' AND a.nomag NOT LIKE '_N%';";
+		st = cnx.createStatement();
+		rs = st.executeQuery(str);
+		// Parcourir le résultat stocké dans rs
+		System.out.println("\n*******************************************************************");
+        System.out.println("Requête n°10:\nAfficher les clients dont le nom de la société commence par un A \n"
+        		+ "mais qui n’ont pas un N en deuxième caractère\n");
+		while (rs.next()) { 
+			System.out.println("Numéro : " + rs.getInt("refprod") + ", Le nom : " + rs.getString("desiprod")); 			
+			res.put(rs.getInt("refprod"), rs.getString("desiprod"));
+		}	 		
+		return res;
+	}
+    
+	public static void main(String[] args) throws SQLException {
+        // Récupérer l'objet Connection
+    	CreerConnexion db = new CreerConnexion();		//creation de la connection
+        Connection cnx = null;
+        cnx = db.myCnx();								 
+
+        // Lancer requêtes
+
+        // PreparedStatement (sans retour)
+        // Déclaration : 
+        String str = "";
+        PreparedStatement ps; 	// pour les requêtes de mise à jour
+        Statement st; 			// pour les requêtes d'interrogations
+        ResultSet rs; 			// jeu de résultat
+
+        dropTables(cnx);
+        createTable(cnx);
+        insererData(cnx);
+        
+        Map<Integer,String> res1 = new HashMap<>();
+        Map<Integer,String> res2 = new HashMap<>();
+        Map<Integer,String> res3 = new HashMap<>();
+        Map<Integer,String> res4 = new HashMap<>();
+        Map<Integer,String> res5 = new HashMap<>();
+        Map<Integer,String> res6 = new HashMap<>();
+        Map<Integer,String> res7 = new HashMap<>();
+        Map<Integer,String> res8 = new HashMap<>();
+        Map<Integer,String> res9 = new HashMap<>();
+        Map<Integer,String> res10 = new HashMap<>();
+        
+	    	res1 = db.requete1(cnx);
+    		res2 = db.requete2(cnx);
+    		res3 = db.requete3(cnx);
+    		res4 = db.requete4(cnx);
+    		res5 = db.requete5(cnx);
+    		res6 = db.requete6(cnx);
+    		res7 = db.requete7(cnx);
+    		res8 = db.requete8(cnx);
+    		res9 = db.requete9(cnx);
+    		res10 = db.requete10(cnx);
+    }
+
+}
