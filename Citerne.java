@@ -1,14 +1,13 @@
 package tp4_bis;
 
 public class Citerne extends Vehicule {
-	
-	int chargeCiterne;
-	TypeVehicule type;
+	TypeVehicule 	type;
+	int		chargeCiterne;
 	
 	public Citerne(String immat, int charge) {
 		super(immat, 3, 10);
-		this.chargeCiterne = charge;
-		this.type = TypeVehicule.Citerne;
+		this.chargeCiterne	=	charge;
+		this.type		=	TypeVehicule.Citerne;
 	}
 		
 	public int getChargeCiterne() {return chargeCiterne;}
@@ -36,9 +35,12 @@ public class Citerne extends Vehicule {
 
 	@Override
 	public String toString() {
-		return "Type de vehicule : " + this.type + ",\nImmatriculation : " + this.immatriculation + ",\nPoids à vide du véhicule : " + 
-				this.PoidsAVide + " tonnes,\nCharge maximum du véhicule : " + this.chargeMaximum + " tonnes,\nCharge actuelle : " + 
-				this.chargeCiterne + " tonnes"+"\nLa vitesse est de: "+VitesseMax()+" km/h\n";
+		return "Type de vehicule : " + this.type + ",\n" 
+			+ "Immatriculation : " + this.immatriculation + ",\n" 
+			+ "Poids à vide du véhicule : " + this.PoidsAVide + " tonnes,\n" 
+			+ "Charge maximum du véhicule : " + this.chargeMaximum + " tonnes,\n" 
+			+ "Charge actuelle : " + this.chargeCiterne + " tonnes"+"\n"
+			+ "La vitesse est de: " + VitesseMax() + " km/h\n";
 	}
 
 	@Override
