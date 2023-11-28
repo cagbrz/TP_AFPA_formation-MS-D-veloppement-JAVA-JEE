@@ -6,7 +6,7 @@ public class Bus extends Vehicule{
 	
 	public Bus(String immat) {
 		super(immat, 4, 0);
-		this.type = TypeVehicule.Bus;
+		this.type	=	TypeVehicule.Bus;
 	}
 	
 	public TypeVehicule getType() {return type;}
@@ -18,8 +18,10 @@ public class Bus extends Vehicule{
 
 	@Override
 	public String toString() {
-		return "Type de vehicule : " + this.type + ",\nImmatriculation : " + this.immatriculation + ",\nPoids à vide du véhicule : " + 
-				this.PoidsAVide + " tonnes" +  "\nLa vitesse est de: "+VitesseMax()+" km/h\n";
+		return "Type de vehicule : " + this.type + ",\n"
+			+ "Immatriculation : " + this.immatriculation + ",\n" 
+			+ "Poids à vide du véhicule : " + this.PoidsAVide + " tonnes\n" 
+			+ "La vitesse est de: " + VitesseMax()+" km/h\n";
 	}
 	
 	@Override
