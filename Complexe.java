@@ -1,24 +1,24 @@
 package tp2;
 
 public class Complexe {
-	static int modulo = 0;
-	static int sommeReels = 0;
-	static int multReels = 0;
-	static int sommeImaginaires = 0;
-	static int multImaginaires;
-	private int imaginaire;
-	private int reel;
-	private int cos;
-	private int sin;
+	static	int modulo		= 	0;
+	static	int sommeReels		= 	0;
+	static	int multReels		= 	0;
+	static	int sommeImaginaires	=	0;
+	static	int multImaginaires;
+	private	int imaginaire;
+	private	int reel;
+	private	int cos;
+	private	int sin;
 	
 	public Complexe(int newReel, int newImaginaire) {
-		this.modulo = 0;
-		this.sommeReels = 0;
-		this.multReels = 0;
-		this.sommeImaginaires = 0;
-		this.multImaginaires = 0;
-		this.imaginaire = newImaginaire;
-		this.reel = newReel;
+		this.modulo		=	0;
+		this.sommeReels		=	0;
+		this.multReels		=	0;
+		this.sommeImaginaires	=	0;
+		this.multImaginaires	=	0;
+		this.imaginaire		= 	newImaginaire;
+		this.reel		=	newReel;
 	}
 
 	public int getReel() {
@@ -72,16 +72,19 @@ public class Complexe {
 	}
 	
 	public Complexe newComplexe(Complexe truc) {
-		int newReel = this.reel + truc.getReel();
-		int newImaginaire = this.imaginaire + truc.getImaginaire();
+		int newReel		=	this.reel + truc.getReel();
+		int newImaginaire	=	this.imaginaire + truc.getImaginaire();
+	
 		return new Complexe(newReel, newImaginaire);
 	}
 
 	public static void main (String[] args) {
-		Complexe c1 = new Complexe(3, 6);
-		Complexe c2 = new Complexe (5,6);
+		Complexe c1	=	new Complexe(3, 6);
+		Complexe c2	=	new Complexe (5,6);
+		
 		c1.module(3, 2);
 		c1.newComplexe(c1);
+		
 		System.out.println("modulo: " + modulo);
 //		System.out.println("somme de c1 et C2: " + newCÒomplexe());
 	}
