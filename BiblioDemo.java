@@ -4,18 +4,22 @@ public class BiblioDemo {
 
 	/**
 	 * public static void main(String[] args) {
-        Livre livre = new Livre("Harry Potter", "JK Rowling", "Poche",Egenre.Document,15);
-        Livre livre2 = new Livre("pif", "paf", "pouf", Egenre.Policier,2);
+        Livre livre	=	new Livre("Harry Potter", "JK Rowling", "Poche",Egenre.Document,15);
+        Livre livre2	=	new Livre("pif", "paf", "pouf", Egenre.Policier,2);
 
         System.out.println(livre);
-        Bibliobus bibliotheque = new Bibliobus("Bibliotheque", 9);
-        Bibliobus b1 = new Bibliobus("Veleda", 14);
+        Bibliobus	bibliotheque	=	new Bibliobus("Bibliotheque", 9);
+        Bibliobus	b1		=	new Bibliobus("Veleda", 14);
+	
         b1.ajoutLivre("Les Misérables", "Victor Hugo", "plop");
         b1.ajoutLivre("Le Seigneur des Anneaux", "J.R.R.Tolkien", "Poche");
         b1.ajoutLivre("Harry Potter", "JK Rowling", "Poche");
         b1.afficheBiblio();
+	
         bibliotheque.ajoutLivre("Le Seigneur des Anneaux", "J.R.R.Tolkien", "Poche");
+	
         livre.nouvelExemplaire(5);
+	
         bibliotheque.ajoutLivre("Harry Potter", "JK Rowling", "Poche");
 //        bibliotheque.ajoutLivre(livre);
 
@@ -28,7 +32,7 @@ public class BiblioDemo {
 	 */
     public static void main(String[] args) {
         // Création d'une instance de Bibliobus avec une capacité de 5 livres
-        Bibliobus bibliobus = new Bibliobus("Ma Bibliothèque", 5);
+        Bibliobus bibliobus	=	new Bibliobus("Ma Bibliothèque", 5);
 
         // Ajout de quelques livres
         bibliobus.ajoutLivre("Titre1", "Auteur1", "Editeur1");
