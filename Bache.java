@@ -1,13 +1,13 @@
 package tp4_bis;
 
 public class Bache extends Vehicule{
-	int chargeBache; 
-	TypeVehicule type; 
+	int 		chargeBache; 
+	TypeVehicule	type; 
 	
 	public Bache(String immat, int charge) {
 		super(immat, 4, 20);
-		this.chargeBache = charge;
-		this.type = TypeVehicule.Bache;
+		this.chargeBache	=	charge;
+		this.type		=	TypeVehicule.Bache;
 	}
 	
 	public int getChargeBache() {return chargeBache;}
@@ -18,16 +18,16 @@ public class Bache extends Vehicule{
 
 
 	public int VitesseMax() {	
-		int vitesse;
+		int	vitesse;
 		
 		if (chargeBache == 0) {
-			vitesse = 130;
+			vitesse	=	130;
 		} else if (chargeBache <= 3 && chargeBache > 0) {
-			vitesse = 110;
+			vitesse	=	110;
 		} else if (chargeBache > 3 && chargeBache <= 7) {
-			vitesse = 90;
+			vitesse	=	90;
 		} else if (chargeBache > 7 && chargeBache < 20) {
-			vitesse = 80;
+			vitesse	=	80;
 		} else {
 			return 0;
 		}
@@ -36,9 +36,12 @@ public class Bache extends Vehicule{
 	
 	@Override
 	public String toString() {
-		return "Type de vehicule : " + this.type + ",\nImmatriculation : " + this.immatriculation + ",\nPoids à vide du véhicule : " + 
-				this.PoidsAVide + " tonnes,\nCharge maximum du véhicule : " + this.chargeMaximum + " tonnes,\nCharge actuelle : " + 
-				this.chargeBache + " tonnes"+"\nLa vitesse est de: "+VitesseMax()+" km/h\n";
+		return "Type de vehicule : " + this.type 
+			+ ",\nImmatriculation : " + this.immatriculation 
+			+ ",\nPoids à vide du véhicule : " + this.PoidsAVide + " tonnes"
+			+",\nCharge maximum du véhicule : " + this.chargeMaximum + " tonnes"
+			+ ",\nCharge actuelle : " + this.chargeBache + " tonnes"
+			+"\nLa vitesse est de: "+VitesseMax()+" km/h\n";
 	}
 
 	@Override
