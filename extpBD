@@ -1,50 +1,74 @@
 CREATE DATABASE IF NOT EXISTS BD;
 USE BD;
+
 CREATE TABLE IF NOT EXISTS livre(
-	numLivre INT AUTO_INCREMENT,
-	titre VARCHAR(99),
-	nombrePages INT,
-	anneeImpression INT,
+	numLivre	INT AUTO_INCREMENT,
+	titre 		VARCHAR(99),
+	nombrePages 	INT,
+	anneeImpression	INT,
 	PRIMARY KEY (numLivre)
 );
 CREATE TABLE IF NOT EXISTS auteur(
-	numAut INT AUTO_INCREMENT,
-	nom VARCHAR(99),
-	prenom VARCHAR(99),
-	PRIMARY KEY (numAut)
+	numAut		INT		AUTO_INCREMENT,
+	nom 		VARCHAR(99),
+	prenom 		VARCHAR(99),
+	PRIMARY	KEY	(numAut)
 );
+
 CREATE TABLE IF NOT EXISTS ecrit(
-	numL INT,
-	numAut INT,
-	PRIMARY KEY(numAut, numL),
-	FOREIGN KEY(numAut) REFERENCES auteur(numAut),
-	FOREIGN KEY(numL) REFERENCES livre(numLivre)
+	numL	INT,
+	numAut	INT,
+
+	PRIMARY	KEY				(numAut, numL),
+
+	FOREIGN	KEY(numAut)	REFERENCES 	auteur(numAut),
+	FOREIGN	KEY(numL) 	REFERENCES 	livre(numLivre)
 );
+
 CREATE TABLE IF NOT EXISTS editeur(
-	numE INT AUTO_INCREMENT,
-	nom VARCHAR(99),
-	ville VARCHAR(99),
-	PRIMARY KEY (numE)
+	numE 	INT 		AUTO_INCREMENT,
+	nom 	VARCHAR(99),
+	ville 	VARCHAR(99),
+
+	PRIMARY	KEY		(numE)
 );
+
 CREATE TABLE IF NOT EXISTS edite(
 	numL INT,
 	numE INT,
-	PRIMARY KEY (numL, numE),
-	FOREIGN KEY (numL) REFERENCES livre(numLivre),
-	FOREIGN KEY (numE) REFERENCES editeur(numE)
+
+	PRIMARY	KEY	(numL, numE),
+
+	FOREIGN	KEY 	(numL) 		REFERENCES	livre(numLivre),
+	FOREIGN KEY 	(numE)		REFERENCES 	editeur(numE)
 );
+
 INSERT INTO livre(titre, nombrePages, anneeImpression) 
-VALUES	("La reine des pommes", 282, 2003),
-		('Mangeclous', 498, 2004),
-		("Belle du seigneur", 1110, 2002),
-		("Couché dans le pain", 248, 2002),
-		("Le Matrimoine", 286, 1976);
+VALUES	("La reine des pommes",	282,	2003),
+	('Mangeclous',		498,	2004),
+	("Belle du seigneur", 	1110,	2002),
+	("Couché dans le pain",	248, 	2002),
+	("Le Matrimoine", 	286, 	1976);
+
 INSERT INTO auteur(nom, prenom) 
-VALUES	("Himes", "Chester"),
-        ("Bazin", "Hervé"),
-        ("Cohen", "Albert");
-INSERT INTO ecrit VALUES (1, 1), (2, 3), (3, 3), (4, 1), (5, 2);
-INSERT INTO editeur(nom, ville) VALUES 
-	("Gallimard", "Paris"),
+VALUES	("Himes",	"Chester"),
+        ("Bazin",	"Hervé"),
+        ("Cohen",	"Albert");
+
+INSERT	INTO	ecrit	
+VALUES	(1, 1), 
+	(2, 3), 
+	(3, 3), 
+	(4, 1), 
+	(5, 2);
+
+INSERT	INTO	editeur(nom, ville)	
+VALUES	("Gallimard", "Paris"),
 	("Seuil", "Lille");
-INSERT INTO edite VALUES (1, 1), (2, 1), (3, 1), (4, 1), (5, 2);
+
+INSERT	INTO edite 
+VALUES 	(1, 1),
+	(2, 1), 
+	(3, 1), 
+	(4, 1), 
+	(5, 2);
