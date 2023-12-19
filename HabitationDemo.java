@@ -4,15 +4,15 @@ public class HabitationDemo {
 	public static void main(String[] args) {
 		double ToutesLesHabitations[]= {0,0,0,0};
 		
-		Habitation habitation1 = new HabitationIndividuelle("Caro", "369 avenue Sully", 300, 4, true);
-		Habitation habitation2 = new HabitationIndividuelle("Stanis", "22 rue Voltaire", 300, 4, false);
-		Habitation habitation3 = new HabitationProfessionnelle("plopsaland", "IDK", 300, 100, 10);		
-		Habitation habitation4 = new HabitationProfessionnelle("walibi", "IDK", 1200, 1000, 65);		
+		Habitation habitation1	=	new HabitationIndividuelle("Caro", "369 avenue Sully", 300, 4, true);
+		Habitation habitation2	=	new HabitationIndividuelle("Stanis", "22 rue Voltaire", 300, 4, false);
+		Habitation habitation3	=	new HabitationProfessionnelle("plopsaland", "IDK", 300, 100, 10);		
+		Habitation habitation4	=	new HabitationProfessionnelle("walibi", "IDK", 1200, 1000, 65);		
 		
-		ToutesLesHabitations[0] = habitation1.impot();
-		ToutesLesHabitations[1] = habitation2.impot();
-		ToutesLesHabitations[2] = habitation3.impot();
-		ToutesLesHabitations[3] = habitation4.impot();
+		ToutesLesHabitations[0]	=	habitation1.impot();
+		ToutesLesHabitations[1]	=	habitation2.impot();
+		ToutesLesHabitations[2]	=	habitation3.impot();
+		ToutesLesHabitations[3]	=	habitation4.impot();
 		
 		System.out.println("************************************************************************************************************************************************************************");
 		System.out.println("Test de la fonction impot()\n");
