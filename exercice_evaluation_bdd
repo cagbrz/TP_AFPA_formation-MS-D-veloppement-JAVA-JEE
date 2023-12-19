@@ -3,33 +3,34 @@ import java.util.*;
 
 public class CreerConnexion {
 	//connecction à la base de données
-    public Connection myCnx() {
-        Connection cn = null;
-        // Création de la chaîne de connexion
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/exPartie4SQL", "root", "");
-            System.out.println("Connexion réussie");
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Connexion pas réussie enfaite");
-        }
-        return cn;
-    }
+    	public Connection myCnx() {
+	        Connection	cn	=	null;
+	        
+		// Création de la chaîne de connexion
+	        try {
+	            Class.forName("com.mysql.cj.jdbc.Driver");
+	            cn	=	DriverManager.getConnection("jdbc:mysql://localhost:3306/exPartie4SQL", "root", "");
+	            System.out.println("Connexion réussie");
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            System.out.println("Connexion pas réussie enfaite");
+	        }
+	        return cn;
+	}
     
-    public static void dropTables(Connection cnx) throws SQLException {
+public static void dropTables(Connection cnx) throws SQLException {
     	String str1 = "DROP TABLE IF EXISTS concerner"; PreparedStatement ps = cnx.prepareStatement(str1); ps.execute();
     	String str2 = "DROP TABLE IF EXISTS composer"; ps = cnx.prepareStatement(str2); ps.execute();
-		String str3 = "DROP TABLE IF EXISTS livraison"; ps = cnx.prepareStatement(str3); ps.execute();
-		String str4 = "DROP TABLE IF EXISTS commande"; ps = cnx.prepareStatement(str4); ps.execute();
-		String str5 = "DROP TABLE IF EXISTS fournisseur"; ps = cnx.prepareStatement(str5);ps.execute();
+	String str3 = "DROP TABLE IF EXISTS livraison"; ps = cnx.prepareStatement(str3); ps.execute();
+	String str4 = "DROP TABLE IF EXISTS commande"; ps = cnx.prepareStatement(str4); ps.execute();
+	String str5 = "DROP TABLE IF EXISTS fournisseur"; ps = cnx.prepareStatement(str5);ps.execute();
 		 
-		String str6 = "DROP TABLE IF EXISTS client";ps = cnx.prepareStatement(str6);ps.execute();
-		String str7 = "DROP TABLE IF EXISTS produit";ps = cnx.prepareStatement(str7);ps.execute();
-		String str8 = "DROP TABLE IF EXISTS facture";ps = cnx.prepareStatement(str8);ps.execute();
-		String str9 = "DROP TABLE IF EXISTS tva";ps = cnx.prepareStatement(str9);ps.execute();
-		String str10 = "DROP TABLE IF EXISTS agence";ps = cnx.prepareStatement(str10);ps.execute();
-	}
+	String str6 = "DROP TABLE IF EXISTS client";ps = cnx.prepareStatement(str6);ps.execute();
+	String str7 = "DROP TABLE IF EXISTS produit";ps = cnx.prepareStatement(str7);ps.execute();
+	String str8 = "DROP TABLE IF EXISTS facture";ps = cnx.prepareStatement(str8);ps.execute();
+	String str9 = "DROP TABLE IF EXISTS tva";ps = cnx.prepareStatement(str9);ps.execute();
+	String str10 = "DROP TABLE IF EXISTS agence";ps = cnx.prepareStatement(str10);ps.execute();
+}
     
     public static void createTable(Connection cnx) throws SQLException {
     	String str = "CREATE TABLE IF NOT EXISTS agence(noag int auto_increment, nomag VARCHAR(99), PRIMARY KEY(noag));\n";
@@ -347,8 +348,9 @@ public class CreerConnexion {
 		rs = st.executeQuery(str);
 		// Parcourir le résultat stocké dans rs
 		System.out.println("\n*******************************************************************");
-        System.out.println("Requête n°10:\nAfficher les clients dont le nom de la société commence par un A \n"
+        	System.out.println("Requête n°10:\nAfficher les clients dont le nom de la société commence par un A \n"
         		+ "mais qui n’ont pas un N en deuxième caractère\n");
+		
 		while (rs.next()) { 
 			System.out.println("Numéro : " + rs.getInt("refprod") + ", Le nom : " + rs.getString("desiprod")); 			
 			res.put(rs.getInt("refprod"), rs.getString("desiprod"));
@@ -357,45 +359,47 @@ public class CreerConnexion {
 	}
     
 	public static void main(String[] args) throws SQLException {
-        // Récupérer l'objet Connection
-    	CreerConnexion db = new CreerConnexion();		//creation de la connection
-        Connection cnx = null;
-        cnx = db.myCnx();								 
-
-        // Lancer requêtes
-
-        // PreparedStatement (sans retour)
-        // Déclaration : 
-        String str = "";
-        PreparedStatement ps; 	// pour les requêtes de mise à jour
-        Statement st; 			// pour les requêtes d'interrogations
-        ResultSet rs; 			// jeu de résultat
-
-        dropTables(cnx);
-        createTable(cnx);
-        insererData(cnx);
+	        // Récupérer l'objet Connection
+	    	CreerConnexion	db	=	new CreerConnexion();		//creation de la connection
+	        Connection cnx		=	null;
+	        cnx			=	db.myCnx();								 
+	
+	        // Lancer requêtes
+	
+	        // PreparedStatement (sans retour)
+	        // Déclaration : 
+	        String str = "";
+	        PreparedStatement	ps; 	// pour les requêtes de mise à jour
+		Statement 		st; 	// pour les requêtes d'interrogations
+	        ResultSet		rs; 	// jeu de résultat
+	
+	        dropTables(cnx);
+	        createTable(cnx);
+	        insererData(cnx);
+	        
+	        Map<Integer,String>	res1 	= new HashMap<>();
+	        Map<Integer,String>	res2 	= new HashMap<>();
+	        Map<Integer,String> 	res3 	= new HashMap<>();
+	        Map<Integer,String> 	res4 	= new HashMap<>();
+	        Map<Integer,String> 	res5 	= new HashMap<>();
+	        Map<Integer,String> 	res6 	= new HashMap<>();
+	        Map<Integer,String> 	res7 	= new HashMap<>();
+	        Map<Integer,String> 	res8 	= new HashMap<>();
+	        Map<Integer,String> 	res9 	= new HashMap<>();
+	        Map<Integer,String> 	res10 	= new HashMap<>();
         
-        Map<Integer,String> res1 = new HashMap<>();
-        Map<Integer,String> res2 = new HashMap<>();
-        Map<Integer,String> res3 = new HashMap<>();
-        Map<Integer,String> res4 = new HashMap<>();
-        Map<Integer,String> res5 = new HashMap<>();
-        Map<Integer,String> res6 = new HashMap<>();
-        Map<Integer,String> res7 = new HashMap<>();
-        Map<Integer,String> res8 = new HashMap<>();
-        Map<Integer,String> res9 = new HashMap<>();
-        Map<Integer,String> res10 = new HashMap<>();
-        
-	    	res1 = db.requete1(cnx);
-    		res2 = db.requete2(cnx);
-    		res3 = db.requete3(cnx);
-    		res4 = db.requete4(cnx);
-    		res5 = db.requete5(cnx);
-    		res6 = db.requete6(cnx);
-    		res7 = db.requete7(cnx);
-    		res8 = db.requete8(cnx);
-    		res9 = db.requete9(cnx);
-    		res10 = db.requete10(cnx);
+	    	res1	=	db.requete1(cnx);
+    		res2 	=	db.requete2(cnx);
+    		res3	=	db.requete3(cnx);
+    		res4	=	db.requete4(cnx);
+    		res5	=	db.requete5(cnx);
+    		res6	=	db.requete6(cnx);
+    		res7	=	db.requete7(cnx);
+    		res8	=	db.requete8(cnx);
+    		res9	=	db.requete9(cnx);
+    		res10	=	db.requete10(cnx);
     }
 
 }
+}
+
