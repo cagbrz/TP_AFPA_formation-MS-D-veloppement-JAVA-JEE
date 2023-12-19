@@ -2,16 +2,17 @@ package tp3;
 
 public class DemoLivre {
 	public static void main(String[] args) {
-		Livre livre = new Livre("Harry Potter", "JK Rowling", "Poche");
-		Livre livre2 = new Livre("Harry Potter", "JK Rowling", "Poche");
-		System.out.println("Titre du livre: "+livre.getTitre());
-		System.out.println("Auteur du livre: "+livre.getNomAuteur());
-		System.out.println("Editeur du livre: "+livre.getEditeur());
+		Livre	livre	=	new Livre("Harry Potter", "JK Rowling", "Poche");
+		Livre 	livre2	=	new Livre("Harry Potter", "JK Rowling", "Poche");
 		
-		int nb = 4;
-		System.out.println("Nombre d'exemplaires du livre présents dans la bibliotèque: "+livre.getNbreExemplaires());
+		System.out.println("Titre du livre: "	+ livre.getTitre());
+		System.out.println("Auteur du livre: "	+ livre.getNomAuteur());
+		System.out.println("Editeur du livre: "	+ livre.getEditeur());
 		
-		System.out.println("Genre du livre: "+livre.getGenre());
+		int	nb	=	4;
+		System.out.println("Nombre d'exemplaires du livre présents dans la bibliotèque: "	+ livre.getNbreExemplaires());
+		
+		System.out.println("Genre du livre: "	+ livre.getGenre());
 		System.out.println("\nJouons avec le nombre d'exemplaires:\n");
 		System.out.println("Nombre de livres à la base = " + livre.nbreExemplaires);
 		livre.nouvelExemplaire();
@@ -40,7 +41,10 @@ public class DemoLivre {
 		System.out.println("Nombre de livres après la fonction 'perteExemplaire(int nb)' avec nb = 2: " + livre.nbreExemplaires);
 		System.out.println("estPresent: " + livre.estPresent());
 		
-		System.out.println("\n\nnouvelEditeur retourne une nouvelle instance de Livre ayant: \n- le même titre, \n- le même auteur \n- et le même genre que le livre qui exécute cette méthode\n");
+		System.out.println("\n\nnouvelEditeur retourne une nouvelle instance de Livre ayant: "
+				   +"\n- le même titre,"
+				   +"\n- le même auteur"
+				   +"\n- et le même genre que le livre qui exécute cette méthode\n");
 		livre.nouvelEditeur("blabla");
 		System.out.println("Voici ce que retourne la fonction lorsque nous rentrons 'livre.nouvelEditeur(\"blabla\");': \n"+livre.toString());
 		
